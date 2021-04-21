@@ -1,5 +1,6 @@
 package com.example.aid_compass;
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,10 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 
 public class compass_activity extends AppCompatActivity implements SensorEventListener {
 
@@ -27,14 +32,15 @@ public class compass_activity extends AppCompatActivity implements SensorEventLi
 
     // record the angle turned of the compass picture
     private float DegreeStart = 0f;
-
+    TextView DegreeTV;
     // attribut som är tillagda för att stödja vibration/ljud
 
     private SoundPool soundPool;
     private int signal;
     private Vibrator vibrator;
+    private KonfettiView konfettiView;
 
-    TextView DegreeTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class compass_activity extends AppCompatActivity implements SensorEventLi
 
         // skapar ljud + vibration
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        konfettiView = findViewById(R.id.konfettiView);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -121,7 +128,16 @@ public class compass_activity extends AppCompatActivity implements SensorEventLi
 
        if((int) degree == 0){
            soundPool.play(signal,1,1,0,0,1);
-
+           konfettiView.build()
+                   .addColors(Color.parseColor("#799C27B0"), Color.parseColor("#e75480"), Color.parseColor("#DAA520"))
+                   .setDirection(0.0, 359.0)
+                   .setSpeed(1f, 5f)
+                   .setFadeOutEnabled(true)
+                   .setTimeToLive(2000L)
+                   .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                   .addSizes(new Size(12, 5f))
+                   .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                   .streamFor(300, 500L);
        }
     }
 
