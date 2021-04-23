@@ -16,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
@@ -140,8 +139,6 @@ public class compass_activity extends AppCompatActivity implements SensorEventLi
                    .streamFor(300, 500L);
        }
     }
-
-
 
 
     @Override
